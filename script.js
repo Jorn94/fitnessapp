@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const workoutList = document.getElementById("workout-list");
     const addItemButton = document.getElementById("add-item");
-    const finishButton = document.getElementById("finish-workout");
     const pingSound = document.getElementById("ping-sound");
     const congratsMessage = document.getElementById("congratulations-message");
 
@@ -95,19 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
             startWorkoutButton.textContent = "End Workout";
         } else {
             clearInterval(timer); // Stop the timer
-            congratsMessage.style.display = "block"; // Show congratulatory message
-            finishButton.style.display = "block"; // Show the finish button
-            startWorkoutButton.textContent = "Start Workout";
-            timerDisplay.textContent = "00:00:00"; // Reset timer display
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
+            congratsMessage.style.display = "block"; // Show congratulatory message in the middle of the screen
+            startWorkoutButton.disabled = true; // Disable the button
         }
-    });
-
-    // Function for finishing the workout
-    finishButton.addEventListener("click", function () {
-        alert("Great job! You finished your workout.");
-        congratsMessage.style.display = "none"; // Hide congratulatory message
     });
 });
