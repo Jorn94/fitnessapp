@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Workout Checklist</h1>
         <div id="workout-list">
-            <!-- Empty checklist that can be filled dynamically -->
+            <!-- Pre-filled workout items -->
         </div>
         <button id="add-item" class="add-button">+</button>
 
@@ -22,8 +22,13 @@
 
         <!-- Finish Button -->
         <button id="finish-workout" class="finish-button" style="display: none;">Finish Workout</button>
+
+        <!-- Congratulatory Message -->
+        <div id="congratulations-message" class="congrats-box" style="display: none;">
+            Well done motherfucker!!
+        </div>
     </div>
-    <audio id="ping-sound" src="ping.wav" preload="auto"></audio>
+    <audio id="ping-sound" src="ping.mp3" preload="auto"></audio>
     <script src="script.js"></script>
 </body>
 </html>

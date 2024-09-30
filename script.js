@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const addItemButton = document.getElementById("add-item");
     const finishButton = document.getElementById("finish-workout");
     const pingSound = document.getElementById("ping-sound");
+    const congratsMessage = document.getElementById("congratulations-message");
 
     // Timer variables
     let timer;
@@ -11,6 +12,43 @@ document.addEventListener("DOMContentLoaded", function () {
     let hours = 0;
     const timerDisplay = document.getElementById("timer-display");
     const startWorkoutButton = document.getElementById("start-workout");
+
+    // Pre-filled workout items
+    const workoutItems = [
+        "Pull ups, 4 x 10",
+        "Dips, 3 x 4 reps",
+        "Cable flyes, 3 x 10",
+        "Squats, 3 x 50 --> 15kg",
+        "Single leg squats",
+        "Lunges, 3 x 10",
+        "Hyperextensions, 3 x 15",
+        "Pull ups, 3 x 8 ultra clean",
+        "Push ups, 4x20",
+        "Shoulder raises, 3 x 15",
+        "Traps shrugs",
+        "Leg raises, 3 x 10",
+        "Push ups, 3 x 20",
+        "Calfs, 3 x 50",
+        "Triceps",
+        "Biceps",
+        "Face pulls"
+    ];
+
+    // Function to render pre-filled workout items
+    workoutItems.forEach(item => {
+        const newItem = document.createElement("div");
+        newItem.innerHTML = `
+            <input type="checkbox" class="workout-item"> 
+            <input type="text" value="${item}">
+            <span class="delete-item">&times;</span>
+        `;
+        workoutList.appendChild(newItem);
+
+        // Attach event listener to the new delete item cross
+        newItem.querySelector(".delete-item").addEventListener("click", function () {
+            workoutList.removeChild(newItem);
+        });
+    });
 
     // Function to add a new workout item
     addItemButton.addEventListener("click", function () {
@@ -57,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             startWorkoutButton.textContent = "End Workout";
         } else {
             clearInterval(timer); // Stop the timer
-            alert("Congratulations! You finished your workout.");
+            congratsMessage.style.display = "block"; // Show congratulatory message
             finishButton.style.display = "block"; // Show the finish button
             startWorkoutButton.textContent = "Start Workout";
             timerDisplay.textContent = "00:00:00"; // Reset timer display
@@ -70,5 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function for finishing the workout
     finishButton.addEventListener("click", function () {
         alert("Great job! You finished your workout.");
+        congratsMessage.style.display = "none"; // Hide congratulatory message
     });
 });
