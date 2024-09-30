@@ -38,10 +38,12 @@ button:hover {
 }
 
 .scrollable {
-    max-height: 300px; /* Set max height for the workout list */
+    max-height: 240px; /* Set height to show 6 items (40px height each) */
     overflow-y: auto;  /* Enable vertical scroll */
     margin: 20px 0;
     text-align: left;
+    border: 1px solid #555;
+    padding: 10px;
 }
 
 #workout-list > div {
@@ -79,11 +81,11 @@ input[type="text"] {
 .add-button {
     font-size: 25px;
     background-color: #32cd32;
-    width: 40px;  /* Reduced size for the button */
-    height: 40px;
+    width: 30px;  /* Reduced size for the button */
+    height: 30px;
     border-radius: 50%;
-    line-height: 40px; /* Center the + symbol vertically */
-    margin: 20px auto;
+    line-height: 30px; /* Center the + symbol vertically */
+    margin: 0 auto;
     display: block;
     border: 2px solid #2e8b57;
 }
@@ -110,11 +112,12 @@ input[type="text"] {
     background-color: #32cd32;
     color: #ffffff;
     padding: 20px;
-    position: absolute;
+    position: fixed; /* Center the box on the screen */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     font-size: 18px;
     text-align: center;
+    z-index: 1000; /* Make sure it appears above other elements */
 }

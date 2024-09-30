@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Function to add a new workout item
+    // Function to add a new workout item and scroll to bottom
     addItemButton.addEventListener("click", function () {
         const newItem = document.createElement("div");
         newItem.innerHTML = `
@@ -63,6 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
         newItem.querySelector(".delete-item").addEventListener("click", function () {
             workoutList.removeChild(newItem);
         });
+
+        // Scroll to the bottom of the list
+        workoutList.scrollTop = workoutList.scrollHeight;
     });
 
     // Function to play ping sound on checkbox check
@@ -95,7 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             clearInterval(timer); // Stop the timer
             congratsMessage.style.display = "block"; // Show congratulatory message in the middle of the screen
-            startWorkoutButton.disabled = true; // Disable the button
+            startWorkoutButton.textContent = "Reset"; // Change button text to Reset
+            startWorkoutButton.disabled = true; // Disable the button to prevent further actions
         }
     });
 });
