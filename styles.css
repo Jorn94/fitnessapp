@@ -80,18 +80,15 @@ input[type="text"] {
 
 .add-button {
     font-size: 25px;
-    background-color: #32cd32;
-    width: 30px;  /* Reduced size for the button */
-    height: 30px;
-    border-radius: 50%;
-    line-height: 30px; /* Center the + symbol vertically */
+    color: #32cd32;  /* Set the + sign color to green */
+    background: none;  /* Remove the background */
+    border: none;  /* Remove border */
     margin: 0 auto;
     display: block;
-    border: 2px solid #2e8b57;
 }
 
 .add-button:hover {
-    background-color: #2e8b57;
+    color: #2e8b57;  /* Darker green on hover */
 }
 
 #timer {

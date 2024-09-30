@@ -3,14 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const addItemButton = document.getElementById("add-item");
     const pingSound = document.getElementById("ping-sound");
     const congratsMessage = document.getElementById("congratulations-message");
+    const startWorkoutButton = document.getElementById("start-workout");
+    const timerDisplay = document.getElementById("timer-display");
 
     // Timer variables
     let timer;
     let seconds = 0;
     let minutes = 0;
     let hours = 0;
-    const timerDisplay = document.getElementById("timer-display");
-    const startWorkoutButton = document.getElementById("start-workout");
 
     // Pre-filled workout items
     const workoutItems = [
@@ -33,21 +33,36 @@ document.addEventListener("DOMContentLoaded", function () {
         "Face pulls"
     ];
 
-    // Function to render pre-filled workout items
-    workoutItems.forEach(item => {
-        const newItem = document.createElement("div");
-        newItem.innerHTML = `
-            <input type="checkbox" class="workout-item"> 
-            <input type="text" value="${item}">
-            <span class="delete-item">&times;</span>
-        `;
-        workoutList.appendChild(newItem);
+    // Function to reset the app to its initial state
+    function resetApp() {
+        workoutList.innerHTML = ''; // Clear workout list
+        congratsMessage.style.display = "none"; // Hide congratulatory message
+        startWorkoutButton.textContent = "Start Workout"; // Reset button text
+        timerDisplay.textContent = "00:00:00"; // Reset timer display
+        startWorkoutButton.disabled = false; // Enable the button
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
 
-        // Attach event listener to the new delete item cross
-        newItem.querySelector(".delete-item").addEventListener("click", function () {
-            workoutList.removeChild(newItem);
+        // Re-render pre-filled workout items
+        workoutItems.forEach(item => {
+            const newItem = document.createElement("div");
+            newItem.innerHTML = `
+                <input type="checkbox" class="workout-item"> 
+                <input type="text" value="${item}">
+                <span class="delete-item">&times;</span>
+            `;
+            workoutList.appendChild(newItem);
+
+            // Attach event listener to the new delete item cross
+            newItem.querySelector(".delete-item").addEventListener("click", function () {
+                workoutList.removeChild(newItem);
+            });
         });
-    });
+    }
+
+    // Render pre-filled workout items on initial load
+    resetApp();
 
     // Function to add a new workout item and scroll to bottom
     addItemButton.addEventListener("click", function () {
@@ -100,6 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
             congratsMessage.style.display = "block"; // Show congratulatory message in the middle of the screen
             startWorkoutButton.textContent = "Reset"; // Change button text to Reset
             startWorkoutButton.disabled = true; // Disable the button to prevent further actions
+        }
+    });
+
+    // Reset the app when the Reset button is clicked
+    startWorkoutButton.addEventListener("click", function () {
+        if (startWorkoutButton.textContent === "Reset") {
+            resetApp();
         }
     });
 });
