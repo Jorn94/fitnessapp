@@ -81,10 +81,11 @@ input[type="text"] {
 .add-button {
     font-size: 25px;
     color: #32cd32;  /* Set the + sign color to green */
-    background: none;  /* Remove the background */
+    background: none;  /* Remove background color */
     border: none;  /* Remove border */
-    margin: 0 auto;
-    display: block;
+    padding: 0;
+    margin: 10px 0;
+    cursor: pointer;
 }
 
 .add-button:hover {
