@@ -12,10 +12,18 @@
         <div id="workout-list">
             <!-- Empty checklist that can be filled dynamically -->
         </div>
-        <button id="add-item">Add Workout Item</button>
-        <button id="finish-workout">Finish Workout</button>
+        <button id="add-item" class="add-button">+</button>
+
+        <!-- Timer Section -->
+        <div id="timer">
+            <button id="start-workout">Start Workout</button>
+            <p id="timer-display">00:00:00</p>
+        </div>
+
+        <!-- Finish Button -->
+        <button id="finish-workout" class="finish-button" style="display: none;">Finish Workout</button>
     </div>
-    <audio id="ping-sound" src="ping.mp3" preload="auto"></audio>
+    <audio id="ping-sound" src="ping.wav" preload="auto"></audio>
     <script src="script.js"></script>
 </body>
 </html>

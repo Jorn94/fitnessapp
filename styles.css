@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-    width: 300px;
+    width: 350px;
     padding: 20px;
     background: #333;
     border-radius: 10px;
@@ -41,6 +41,60 @@ button:hover {
     text-align: left;
 }
 
+#workout-list > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
 input[type="checkbox"] {
+    width: 25px; /* Increase the size of the checkbox */
+    height: 25px;
     margin-right: 10px;
 }
+
+input[type="text"] {
+    width: 60%;
+    padding: 5px;
+}
+
+.delete-item {
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    color: #666;
+    display: none;
+    cursor: pointer;
+}
+
+#workout-list > div:hover .delete-item {
+    display: block; /* Show the cross only on hover */
+}
+
+.add-button {
+    font-size: 25px;
+    background-color: #90ee90;
+    width: 40px;
+    height: 40px;
+    margin: 20px 0;
+    border-radius: 50%;
+}
+
+.finish-button {
+    background-color: #32cd32;
+}
+
+#timer {
+    margin-top: 20px;
+}
+
+#timer-display {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#start-workout {
+    width: 100%;
+}
+
