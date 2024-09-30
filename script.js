@@ -110,18 +110,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (startWorkoutButton.textContent === "Start Workout") {
             timer = setInterval(updateTimer, 1000); // Start the timer
             startWorkoutButton.textContent = "End Workout";
-        } else {
+        } else if (startWorkoutButton.textContent === "End Workout") {
             clearInterval(timer); // Stop the timer
             congratsMessage.style.display = "block"; // Show congratulatory message in the middle of the screen
             startWorkoutButton.textContent = "Reset"; // Change button text to Reset
-            startWorkoutButton.disabled = true; // Disable the button to prevent further actions
-        }
-    });
-
-    // Reset the app when the Reset button is clicked
-    startWorkoutButton.addEventListener("click", function () {
-        if (startWorkoutButton.textContent === "Reset") {
-            resetApp();
+        } else if (startWorkoutButton.textContent === "Reset") {
+            resetApp(); // Reset the app when "Reset" is clicked
         }
     });
 });

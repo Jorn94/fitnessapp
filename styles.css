@@ -89,7 +89,7 @@ input[type="text"] {
 }
 
 .add-button:hover {
-    color: #2e8b57;  /* Darker green on hover */
+    color: #32cd32;  /* Remove hover color change */
 }
 
 #timer {
