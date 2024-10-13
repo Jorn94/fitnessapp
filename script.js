@@ -22,12 +22,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to load all workout lists from localStorage
     function loadWorkoutLists() {
         const savedLists = localStorage.getItem('workoutLists');
-        return savedLists ? JSON.parse(savedLists) : {};
+        return savedLists ? JSON.parse(savedLists) : { "Savage Viking Workout": getDefaultWorkoutList() };
     }
 
     // Function to save workout lists to localStorage
     function saveWorkoutLists(lists) {
         localStorage.setItem('workoutLists', JSON.stringify(lists));
+    }
+
+    // Function to get the default workout list
+    function getDefaultWorkoutList() {
+        return [
+            "Pull ups, 4 x 10",
+            "Dips, 3 x 4 reps",
+            "Cable flyes, 3 x 10",
+            "Squats, 3 x 50 --> 15kg",
+            "Single leg squats",
+            "Lunges, 3 x 10",
+            "Hyperextensions, 3 x 15",
+            "Pull ups, 3 x 8 ultra clean",
+            "Push ups, 4x20",
+            "Shoulder raises, 3 x 15",
+            "Traps shrugs",
+            "Leg raises, 3 x 10",
+            "Push ups, 3 x 20",
+            "Calfs, 3 x 50",
+            "Triceps",
+            "Biceps",
+            "Face pulls"
+        ];
     }
 
     // Function to load a specific workout list
@@ -114,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
             lists[listName] = []; // Create an empty list
             saveWorkoutLists(lists);
             activeWorkoutList = listName;
-            renderWorkoutList([]);
+            renderWorkoutList([]); // Render an empty list
             showWorkoutScreen();
         }
     });
