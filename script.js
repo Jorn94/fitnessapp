@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const timerDisplay = document.getElementById("timer-display");
     const workoutScreen = document.getElementById("workout-screen");
     const startScreen = document.getElementById("start-screen");
-    const workoutListsDiv = document.getElementById("workout-lists");
     const createNewListButton = document.getElementById("create-new-list");
     const goHomeButton = document.getElementById("go-home");
     const defaultWorkoutLink = document.getElementById("default-workout");
@@ -94,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function showStartScreen() {
         startScreen.style.display = 'block';
         workoutScreen.style.display = 'none';
-        renderWorkoutLists();
     }
 
     // Function to show the workout screen
@@ -102,25 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
         startScreen.style.display = 'none';
         workoutScreen.style.display = 'block';
     }
-
-    // Function to render all workout lists in the start screen
-    function renderWorkoutLists() {
-        const lists = loadWorkoutLists();
-        workoutListsDiv.innerHTML = '';
-        for (let listName in lists) {
-            const listButton = document.createElement("button");
-            listButton.textContent = listName;
-            listButton.addEventListener("click", function () {
-                activeWorkoutList = listName;
-                renderWorkoutList(loadWorkoutList(listName));
-                showWorkoutScreen();
-            });
-            workoutListsDiv.appendChild(listButton);
-        }
-    }
-
-    // Initial rendering of the start screen
-    showStartScreen();
 
     // Handle clicking the default workout list link (Savage Viking Workout)
     defaultWorkoutLink.addEventListener("click", function () {
@@ -160,10 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
         saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
     });
 
-    // Go back to the start screen
+    // Go back to the start screen (home button)
     goHomeButton.addEventListener("click", function () {
         showStartScreen();
     });
-
-    // Timer functionality...
 });
