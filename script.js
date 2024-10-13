@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const startScreen = document.getElementById("start-screen");
     const createNewListButton = document.getElementById("create-new-list");
     const goHomeButton = document.getElementById("go-home");
+    const saveListButton = document.getElementById("save-list");
     const defaultWorkoutLink = document.getElementById("default-workout");
 
     // Timer variables
@@ -116,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
             lists[listName] = []; // Create an empty list
             saveWorkoutLists(lists);
             activeWorkoutList = listName;
-            renderWorkoutList([]); // Render an empty list
+            renderWorkoutList([ '']); // Show one empty item initially
             showWorkoutScreen();
         }
     });
@@ -142,5 +143,51 @@ document.addEventListener("DOMContentLoaded", function () {
     // Go back to the start screen (home button)
     goHomeButton.addEventListener("click", function () {
         showStartScreen();
+    });
+
+    // Save the workout list at any time
+    saveListButton.addEventListener("click", function () {
+        saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
+        alert("Workout list saved!");
+    });
+
+    // Timer functionality
+    function resetTimer() {
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        timerDisplay.textContent = "00:00:00";
+    }
+
+    function updateTimer() {
+        seconds++;
+        if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+        timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    startWorkoutButton.addEventListener("click", function () {
+        if (startWorkoutButton.textContent === "Start Workout") {
+            timer = setInterval(updateTimer, 1000);
+            startWorkoutButton.textContent = "End Workout";
+        } else if (startWorkoutButton.textContent === "End Workout") {
+            clearInterval(timer);
+            congratsMessage.style.display = "block";
+            startWorkoutButton.textContent = "Reset";
+        } else if (startWorkoutButton.textContent === "Reset") {
+            congratsMessage.style.display = "none";
+            resetTimer();
+            startWorkoutButton.textContent = "Start Workout";
+            // Uncheck all checkboxes but retain the list
+            Array.from(workoutList.querySelectorAll("input[type='checkbox']")).forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
     });
 });

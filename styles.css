@@ -129,15 +129,18 @@ button:hover {
     z-index: 1000;
 }
 
-/* Home Button */
-.home-button {
+/* Home and Save Buttons */
+#home-save-buttons {
     position: fixed;
     bottom: 10px;
     left: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
-.home-button a {
+.icon-button {
     color: #ffffff;
     text-decoration: none;
     font-size: 24px;
+    margin-bottom: 10px;
 }
