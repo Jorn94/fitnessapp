@@ -7,20 +7,20 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden; /* Prevent page scrolling */
 }
 
 .container {
-    width: 400px;
-    padding: 20px;
-    background: #333;
-    border-radius: 10px;
+    width: 100vw; /* Fit the full width of the screen */
+    height: 100vh; /* Fit the full height of the screen */
+    background: #333; /* Keep the same gray background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    position: relative;
-}
-
-/* Start Screen */
-.start-screen {
-    display: block;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -81,11 +81,13 @@ button:hover {
 
 .scrollable {
     max-height: 240px;
-    overflow-y: auto;
+    overflow-y: auto; /* Keep checklist scrollable */
     margin: 20px 0;
     text-align: left;
     border: 1px solid #555;
     padding: 10px;
+    width: 100%; /* Make checklist take up full width */
+    box-sizing: border-box;
 }
 
 .add-button {
@@ -144,3 +146,39 @@ button:hover {
     font-size: 24px;
     margin-bottom: 10px;
 }
+
+/* Checklist items styling */
+#workout-list > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px; /* Make items bigger */
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #444;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    width: 30px; /* Bigger checkboxes */
+    height: 30px;
+}
+
+input[type="text"] {
+    width: 100%; /* Make the text input take up the full width */
+    padding: 10px;
+    background-color: #555;
+    border: none;
+    color: white;
+    box-sizing: border-box;
+}
+
+.delete-item {
+    font-size: 24px;
+    color: #f5f5f5;
+    cursor: pointer;
+    margin-left: 10px;
+}
+

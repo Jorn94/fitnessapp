@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const goHomeButton = document.getElementById("go-home");
     const saveListButton = document.getElementById("save-list");
     const defaultWorkoutLink = document.getElementById("default-workout");
+    const workoutListsDiv = document.getElementById("workout-lists");
 
     // Timer variables
     let timer;
@@ -64,6 +65,23 @@ document.addEventListener("DOMContentLoaded", function () {
         const lists = loadWorkoutLists();
         lists[listName] = items;
         saveWorkoutLists(lists);
+        renderWorkoutLists(); // Ensure the list appears on the home screen
+    }
+
+    // Function to render all workout lists on the start screen
+    function renderWorkoutLists() {
+        const lists = loadWorkoutLists();
+        workoutListsDiv.innerHTML = ''; // Clear existing items
+        for (let listName in lists) {
+            const listButton = document.createElement("button");
+            listButton.textContent = listName;
+            listButton.addEventListener("click", function () {
+                activeWorkoutList = listName;
+                renderWorkoutList(loadWorkoutList(listName));
+                showWorkoutScreen();
+            });
+            workoutListsDiv.appendChild(listButton);
+        }
     }
 
     // Function to render the workout list
@@ -92,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to show the start screen
     function showStartScreen() {
+        renderWorkoutLists(); // Ensure updated lists are rendered
         startScreen.style.display = 'block';
         workoutScreen.style.display = 'none';
     }
@@ -117,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             lists[listName] = []; // Create an empty list
             saveWorkoutLists(lists);
             activeWorkoutList = listName;
-            renderWorkoutList([ '']); // Show one empty item initially
+            renderWorkoutList(['']); // Show one empty item initially
             showWorkoutScreen();
         }
     });
@@ -190,4 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
+
+    // Initialize the app with the start screen
+    showStartScreen();
 });
