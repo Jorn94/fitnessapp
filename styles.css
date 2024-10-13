@@ -18,45 +18,65 @@ body {
     position: relative;
 }
 
+/* Start Screen */
+.start-screen {
+    display: block;
+}
+
 h1 {
     color: #90ee90;
 }
 
 .workout-link {
     display: block;
-    font-size: 18px;
-    color: #32cd32;
+    color: #90ee90;
+    font-size: 20px;
     text-decoration: none;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .workout-link:hover {
-    text-decoration: underline;
-}
-
-/* Add New List Section */
-.add-new-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-}
-
-.plus-icon {
-    font-size: 24px;
-    color: #32cd32;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.add-new-list-text {
-    font-size: 18px;
-    color: #32cd32;
-    cursor: pointer;
-}
-
-.add-new-list-text:hover, .plus-icon:hover {
     color: #2e8b57;
+}
+
+.new-list-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-icon {
+    font-size: 25px;
+    color: #32cd32;
+    cursor: pointer;
+}
+
+.add-new-list {
+    color: #32cd32;
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.add-new-list:hover {
+    color: #2e8b57;
+}
+
+button {
+    background-color: #32cd32;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2e8b57;
 }
 
 .scrollable {
