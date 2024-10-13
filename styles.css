@@ -18,6 +18,11 @@ body {
     position: relative;
 }
 
+/* Start Screen */
+.start-screen {
+    display: none;
+}
+
 h1 {
     color: #90ee90;
 }
@@ -38,58 +43,26 @@ button:hover {
 }
 
 .scrollable {
-    max-height: 240px; /* Set height to show 6 items (40px height each) */
-    overflow-y: auto;  /* Enable vertical scroll */
+    max-height: 240px;
+    overflow-y: auto;
     margin: 20px 0;
     text-align: left;
     border: 1px solid #555;
     padding: 10px;
 }
 
-#workout-list > div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    position: relative;
-    padding-left: 40px; /* Indent the checkbox and input */
-}
-
-input[type="checkbox"] {
-    width: 25px; /* Increase the size of the checkbox */
-    height: 25px;
-    margin-right: 10px;
-}
-
-input[type="text"] {
-    width: 60%;
-    padding: 5px;
-}
-
-.delete-item {
-    position: absolute;
-    right: 10px;
-    font-size: 20px;
-    color: #666;
-    display: none;
-    cursor: pointer;
-}
-
-#workout-list > div:hover .delete-item {
-    display: block; /* Show the cross only on hover */
-}
-
 .add-button {
     font-size: 25px;
-    color: #32cd32;  /* Set the + sign color to green */
-    background: none;  /* Remove background color */
-    border: none;  /* Remove border */
+    color: #32cd32;
+    background: none;
+    border: none;
     padding: 0;
     margin: 10px 0;
     cursor: pointer;
 }
 
 .add-button:hover {
-    color: #32cd32;  /* Remove hover color change */
+    color: #2e8b57;
 }
 
 #timer {
@@ -105,17 +78,29 @@ input[type="text"] {
     width: 100%;
 }
 
-/* Congratulatory Message Box */
 .congrats-box {
     background-color: #32cd32;
     color: #ffffff;
     padding: 20px;
-    position: fixed; /* Center the box on the screen */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     font-size: 18px;
     text-align: center;
-    z-index: 1000; /* Make sure it appears above other elements */
+    z-index: 1000;
+}
+
+/* Home Button */
+.home-button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
+
+.home-button a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 24px;
 }

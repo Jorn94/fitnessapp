@@ -8,22 +8,40 @@
 </head>
 <body>
     <div class="container">
-        <h1>Workout Checklist</h1>
-        <div id="workout-list" class="scrollable">
-            <!-- Pre-filled workout items will be populated here -->
-        </div>
-        <button id="add-item" class="add-button">+</button>
-
-        <!-- Timer Section -->
-        <div id="timer">
-            <button id="start-workout">Start Workout</button>
-            <p id="timer-display">00:00:00</p>
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Select a Workout List</h1>
+            <div id="workout-lists" class="workout-lists">
+                <!-- Existing workout lists will be populated here -->
+            </div>
+            <button id="create-new-list" class="add-button">Create New List</button>
         </div>
 
-        <!-- Congratulatory Message -->
-        <div id="congratulations-message" class="congrats-box" style="display: none;">
-            Well done motherfucker!!
+        <!-- Workout Screen -->
+        <div id="workout-screen" class="workout-screen" style="display: none;">
+            <h1 id="workout-title">Workout Checklist</h1>
+            <div id="workout-list" class="scrollable">
+                <!-- Pre-filled workout items will be populated here -->
+            </div>
+            <button id="add-item" class="add-button">+</button>
+
+            <!-- Timer Section -->
+            <div id="timer">
+                <button id="start-workout">Start Workout</button>
+                <p id="timer-display">00:00:00</p>
+            </div>
+
+            <!-- Congratulatory Message -->
+            <div id="congratulations-message" class="congrats-box" style="display: none;">
+                Well done motherfucker!!
+            </div>
+
+            <!-- Home Button -->
+            <div id="home-button" class="home-button">
+                <a href="#" id="go-home">🏠 Home</a>
+            </div>
         </div>
+
     </div>
     <audio id="ping-sound" src="ping.wav" preload="auto"></audio>
     <script src="script.js"></script>

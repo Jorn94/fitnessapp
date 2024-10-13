@@ -5,49 +5,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const congratsMessage = document.getElementById("congratulations-message");
     const startWorkoutButton = document.getElementById("start-workout");
     const timerDisplay = document.getElementById("timer-display");
+    const workoutScreen = document.getElementById("workout-screen");
+    const startScreen = document.getElementById("start-screen");
+    const workoutListsDiv = document.getElementById("workout-lists");
+    const createNewListButton = document.getElementById("create-new-list");
+    const goHomeButton = document.getElementById("go-home");
 
     // Timer variables
     let timer;
     let seconds = 0;
     let minutes = 0;
     let hours = 0;
+    let activeWorkoutList = null;
 
-    // Function to load the workout list from localStorage
-    function loadWorkoutList() {
-        const savedList = localStorage.getItem('workoutList');
-        if (savedList) {
-            return JSON.parse(savedList);
-        }
-        return [
-            "Pull ups, 4 x 10",
-            "Dips, 3 x 4 reps",
-            "Cable flyes, 3 x 10",
-            "Squats, 3 x 50 --> 15kg",
-            "Single leg squats",
-            "Lunges, 3 x 10",
-            "Hyperextensions, 3 x 15",
-            "Pull ups, 3 x 8 ultra clean",
-            "Push ups, 4x20",
-            "Shoulder raises, 3 x 15",
-            "Traps shrugs",
-            "Leg raises, 3 x 10",
-            "Push ups, 3 x 20",
-            "Calfs, 3 x 50",
-            "Triceps",
-            "Biceps",
-            "Face pulls"
-        ];
+    // Function to load all workout lists from localStorage
+    function loadWorkoutLists() {
+        const savedLists = localStorage.getItem('workoutLists');
+        return savedLists ? JSON.parse(savedLists) : {};
     }
 
-    // Function to save the workout list to localStorage
-    function saveWorkoutList() {
-        const workoutItems = [];
-        workoutList.querySelectorAll("input[type='text']").forEach(input => {
-            if (input.value.trim()) {
-                workoutItems.push(input.value.trim());
-            }
-        });
-        localStorage.setItem('workoutList', JSON.stringify(workoutItems));
+    // Function to save workout lists to localStorage
+    function saveWorkoutLists(lists) {
+        localStorage.setItem('workoutLists', JSON.stringify(lists));
+    }
+
+    // Function to load a specific workout list
+    function loadWorkoutList(listName) {
+        const lists = loadWorkoutLists();
+        return lists[listName] || [];
+    }
+
+    // Function to save a specific workout list
+    function saveWorkoutList(listName, items) {
+        const lists = loadWorkoutLists();
+        lists[listName] = items;
+        saveWorkoutLists(lists);
     }
 
     // Function to render the workout list
@@ -62,34 +54,64 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             workoutList.appendChild(newItem);
 
-            // Attach event listener to the new delete item cross
             newItem.querySelector(".delete-item").addEventListener("click", function () {
                 workoutList.removeChild(newItem);
-                saveWorkoutList(); // Save the updated list
+                saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
             });
         });
     }
 
-    // Initial load of workout list from localStorage
-    const initialList = loadWorkoutList();
-    renderWorkoutList(initialList);
-
-    // Function to reset the app to its initial state
-    function resetApp() {
-        congratsMessage.style.display = "none"; // Hide congratulatory message
-        startWorkoutButton.textContent = "Start Workout"; // Reset button text
-        timerDisplay.textContent = "00:00:00"; // Reset timer display
-        startWorkoutButton.disabled = false; // Enable the button
-        seconds = 0;
-        minutes = 0;
-        hours = 0;
-
-        // Reload saved workout list
-        const savedList = loadWorkoutList();
-        renderWorkoutList(savedList);
+    // Function to get the current workout items
+    function getCurrentWorkoutItems() {
+        return Array.from(workoutList.querySelectorAll("input[type='text']")).map(input => input.value.trim()).filter(Boolean);
     }
 
-    // Function to add a new workout item and save the list
+    // Function to show the start screen
+    function showStartScreen() {
+        startScreen.style.display = 'block';
+        workoutScreen.style.display = 'none';
+        renderWorkoutLists();
+    }
+
+    // Function to show the workout screen
+    function showWorkoutScreen() {
+        startScreen.style.display = 'none';
+        workoutScreen.style.display = 'block';
+    }
+
+    // Function to render all workout lists in the start screen
+    function renderWorkoutLists() {
+        const lists = loadWorkoutLists();
+        workoutListsDiv.innerHTML = '';
+        for (let listName in lists) {
+            const listButton = document.createElement("button");
+            listButton.textContent = listName;
+            listButton.addEventListener("click", function () {
+                activeWorkoutList = listName;
+                renderWorkoutList(loadWorkoutList(listName));
+                showWorkoutScreen();
+            });
+            workoutListsDiv.appendChild(listButton);
+        }
+    }
+
+    // Initial rendering of the start screen
+    showStartScreen();
+
+    // Create new workout list
+    createNewListButton.addEventListener("click", function () {
+        const listName = prompt("Enter the name of your new workout list:");
+        if (listName) {
+            const lists = loadWorkoutLists();
+            lists[listName] = []; // Create an empty list
+            saveWorkoutLists(lists);
+            activeWorkoutList = listName;
+            renderWorkoutList([]);
+            showWorkoutScreen();
+        }
+    });
+
+    // Add new workout item
     addItemButton.addEventListener("click", function () {
         const newItem = document.createElement("div");
         newItem.innerHTML = `
@@ -99,52 +121,17 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         workoutList.appendChild(newItem);
 
-        // Attach event listener to the new delete item cross
         newItem.querySelector(".delete-item").addEventListener("click", function () {
             workoutList.removeChild(newItem);
-            saveWorkoutList(); // Save the updated list
+            saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
         });
 
-        // Scroll to the bottom of the list
-        workoutList.scrollTop = workoutList.scrollHeight;
-
-        // Save the updated list
-        saveWorkoutList();
+        saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
     });
 
-    // Function to play ping sound on checkbox check
-    workoutList.addEventListener("change", function (e) {
-        if (e.target && e.target.matches(".workout-item")) {
-            pingSound.play();
-        }
+    // Go back to the start screen
+    goHomeButton.addEventListener("click", function () {
+        showStartScreen();
     });
 
-    // Timer function
-    function updateTimer() {
-        seconds++;
-        if (seconds === 60) {
-            seconds = 0;
-            minutes++;
-            if (minutes === 60) {
-                minutes = 0;
-                hours++;
-            }
-        }
-        // Display the time in HH:MM:SS format
-        timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }
-
-    // Start/End Workout button toggle and timer control
-    startWorkoutButton.addEventListener("click", function () {
-        if (startWorkoutButton.textContent === "Start Workout") {
-            timer = setInterval(updateTimer, 1000); // Start the timer
-            startWorkoutButton.textContent = "End Workout";
-        } else if (startWorkoutButton.textContent === "End Workout") {
-            clearInterval(timer); // Stop the timer
-            congratsMessage.style.display = "block"; // Show congratulatory message in the middle of the screen
-            startWorkoutButton.textContent = "Reset"; // Change button text to Reset
-        } else if (startWorkoutButton.textContent === "Reset") {
-            resetApp(); // Reset the app when "Reset" is clicked
-        }
-    });
-});
+    // Timer
