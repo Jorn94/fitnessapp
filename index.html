@@ -11,10 +11,17 @@
         <!-- Start Screen -->
         <div id="start-screen" class="start-screen">
             <h1>Select a Workout List</h1>
-            <div id="workout-lists" class="workout-lists">
-                <!-- Existing workout lists will be populated here -->
+            <!-- Default Workout List Link -->
+            <a href="#" id="savage-viking-workout" class="workout-link">Savage Viking Workout</a>
+            
+            <!-- Add New Workout List Section -->
+            <div class="add-new-list">
+                <span id="plus-icon" class="plus-icon">+</span>
+                <span id="add-new-list-text" class="add-new-list-text">Add New Workout List</span>
             </div>
-            <button id="create-new-list" class="add-button">Create New List</button>
+            
+            <!-- Dynamic Workout Lists (User Created) -->
+            <div id="workout-lists" class="workout-lists"></div>
         </div>
 
         <!-- Workout Screen -->
@@ -41,7 +48,6 @@
                 <a href="#" id="go-home">🏠 Home</a>
             </div>
         </div>
-
     </div>
     <audio id="ping-sound" src="ping.wav" preload="auto"></audio>
     <script src="script.js"></script>

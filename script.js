@@ -8,25 +8,51 @@ document.addEventListener("DOMContentLoaded", function () {
     const workoutScreen = document.getElementById("workout-screen");
     const startScreen = document.getElementById("start-screen");
     const workoutListsDiv = document.getElementById("workout-lists");
-    const createNewListButton = document.getElementById("create-new-list");
+    const createNewListButton = document.getElementById("plus-icon");
     const goHomeButton = document.getElementById("go-home");
+    const savageVikingLink = document.getElementById("savage-viking-workout");
 
-    // Timer variables
     let timer;
     let seconds = 0;
     let minutes = 0;
     let hours = 0;
     let activeWorkoutList = null;
 
+    // Default workout list name
+    const DEFAULT_WORKOUT_LIST = 'Savage Viking Workout';
+
     // Function to load all workout lists from localStorage
     function loadWorkoutLists() {
         const savedLists = localStorage.getItem('workoutLists');
-        return savedLists ? JSON.parse(savedLists) : {};
+        return savedLists ? JSON.parse(savedLists) : { [DEFAULT_WORKOUT_LIST]: getDefaultWorkoutItems() };
     }
 
     // Function to save workout lists to localStorage
     function saveWorkoutLists(lists) {
         localStorage.setItem('workoutLists', JSON.stringify(lists));
+    }
+
+    // Default workout items
+    function getDefaultWorkoutItems() {
+        return [
+            "Pull ups, 4 x 10",
+            "Dips, 3 x 4 reps",
+            "Cable flyes, 3 x 10",
+            "Squats, 3 x 50 --> 15kg",
+            "Single leg squats",
+            "Lunges, 3 x 10",
+            "Hyperextensions, 3 x 15",
+            "Pull ups, 3 x 8 ultra clean",
+            "Push ups, 4x20",
+            "Shoulder raises, 3 x 15",
+            "Traps shrugs",
+            "Leg raises, 3 x 10",
+            "Push ups, 3 x 20",
+            "Calfs, 3 x 50",
+            "Triceps",
+            "Biceps",
+            "Face pulls"
+        ];
     }
 
     // Function to load a specific workout list
@@ -74,64 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Function to show the workout screen
-    function showWorkoutScreen() {
-        startScreen.style.display = 'none';
-        workoutScreen.style.display = 'block';
-    }
-
-    // Function to render all workout lists in the start screen
-    function renderWorkoutLists() {
-        const lists = loadWorkoutLists();
-        workoutListsDiv.innerHTML = '';
-        for (let listName in lists) {
-            const listButton = document.createElement("button");
-            listButton.textContent = listName;
-            listButton.addEventListener("click", function () {
-                activeWorkoutList = listName;
-                renderWorkoutList(loadWorkoutList(listName));
-                showWorkoutScreen();
-            });
-            workoutListsDiv.appendChild(listButton);
-        }
-    }
-
-    // Initial rendering of the start screen
-    showStartScreen();
-
-    // Create new workout list
-    createNewListButton.addEventListener("click", function () {
-        const listName = prompt("Enter the name of your new workout list:");
-        if (listName) {
-            const lists = loadWorkoutLists();
-            lists[listName] = []; // Create an empty list
-            saveWorkoutLists(lists);
-            activeWorkoutList = listName;
-            renderWorkoutList([]);
-            showWorkoutScreen();
-        }
-    });
-
-    // Add new workout item
-    addItemButton.addEventListener("click", function () {
-        const newItem = document.createElement("div");
-        newItem.innerHTML = `
-            <input type="checkbox" class="workout-item"> 
-            <input type="text" placeholder="Workout Item">
-            <span class="delete-item">&times;</span>
-        `;
-        workoutList.appendChild(newItem);
-
-        newItem.querySelector(".delete-item").addEventListener("click", function () {
-            workoutList.removeChild(newItem);
-            saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
-        });
-
-        saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
-    });
-
-    // Go back to the start screen
-    goHomeButton.addEventListener("click", function () {
-        showStartScreen();
-    });
-
-    // Timer
+    function showWorkoutScreen(listName) {
+        activeWorkoutList = listName;
+        renderWorkoutList(loadWorkoutList(listName));
+        start
