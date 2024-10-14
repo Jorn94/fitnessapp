@@ -72,17 +72,33 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderWorkoutLists() {
         const lists = loadWorkoutLists();
         workoutListsDiv.innerHTML = ''; // Clear existing items
+
+        // Ensure default list is shown only once
+        const defaultLink = document.createElement("a");
+        defaultLink.textContent = "Savage Viking Workout";
+        defaultLink.className = "workout-link";
+        defaultLink.href = "#";
+        defaultLink.addEventListener("click", function () {
+            activeWorkoutList = "Savage Viking Workout";
+            renderWorkoutList(loadWorkoutList(activeWorkoutList));
+            showWorkoutScreen();
+        });
+        workoutListsDiv.appendChild(defaultLink);
+
+        // Render other lists as clickable text below the default list
         for (let listName in lists) {
-            const listLink = document.createElement("a");
-            listLink.textContent = listName;
-            listLink.className = "workout-link";
-            listLink.href = "#";
-            listLink.addEventListener("click", function () {
-                activeWorkoutList = listName;
-                renderWorkoutList(loadWorkoutList(listName));
-                showWorkoutScreen();
-            });
-            workoutListsDiv.appendChild(listLink);
+            if (listName !== "Savage Viking Workout") {
+                const listLink = document.createElement("a");
+                listLink.textContent = listName;
+                listLink.className = "workout-link";
+                listLink.href = "#";
+                listLink.addEventListener("click", function () {
+                    activeWorkoutList = listName;
+                    renderWorkoutList(loadWorkoutList(listName));
+                    showWorkoutScreen();
+                });
+                workoutListsDiv.appendChild(listLink);
+            }
         }
     }
 
@@ -98,9 +114,17 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             workoutList.appendChild(newItem);
 
+            // Handle deleting the workout item
             newItem.querySelector(".delete-item").addEventListener("click", function () {
                 workoutList.removeChild(newItem);
                 saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
+            });
+
+            // Allow adding a new item by pressing Enter
+            newItem.querySelector("input[type='text']").addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    addNewItem();
+                }
             });
         });
     }
@@ -123,14 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         workoutScreen.style.display = 'block';
     }
 
-    // Handle clicking the default workout list link (Savage Viking Workout)
-    defaultWorkoutLink.addEventListener("click", function () {
-        activeWorkoutList = "Savage Viking Workout";
-        renderWorkoutList(loadWorkoutList(activeWorkoutList));
-        showWorkoutScreen();
-    });
-
-    // Create new workout list
+    // Handle creating a new workout list
     createNewListButton.addEventListener("click", function () {
         const listName = prompt("Enter the name of your new workout list:");
         if (listName) {
@@ -143,8 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Add new workout item
-    addItemButton.addEventListener("click", function () {
+    // Add a new workout item
+    function addNewItem() {
         const newItem = document.createElement("div");
         newItem.innerHTML = `
             <input type="checkbox" class="workout-item"> 
@@ -158,8 +175,17 @@ document.addEventListener("DOMContentLoaded", function () {
             saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
         });
 
+        // Allow adding a new item by pressing Enter
+        newItem.querySelector("input[type='text']").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                addNewItem();
+            }
+        });
+
         saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
-    });
+    }
+
+    addItemButton.addEventListener("click", addNewItem);
 
     // Go back to the start screen (home button)
     goHomeButton.addEventListener("click", function () {
