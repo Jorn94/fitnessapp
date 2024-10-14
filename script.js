@@ -23,7 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to load all workout lists from localStorage
     function loadWorkoutLists() {
         const savedLists = localStorage.getItem('workoutLists');
-        return savedLists ? JSON.parse(savedLists) : { "Savage Viking Workout": getDefaultWorkoutList() };
+        if (!savedLists) {
+            // If no lists are saved, initialize with "Savage Viking Workout"
+            return { "Savage Viking Workout": getDefaultWorkoutList() };
+        }
+        return JSON.parse(savedLists);
     }
 
     // Function to save workout lists to localStorage
@@ -73,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const lists = loadWorkoutLists();
         workoutListsDiv.innerHTML = ''; // Clear existing items
 
-        // Render the "Savage Viking Workout" list as clickable text
+        // Render each list as clickable text
         for (let listName in lists) {
             const listLink = document.createElement("a");
             listLink.textContent = listName;
