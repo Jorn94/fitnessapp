@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
             "Traps shrugs",
             "Leg raises, 3 x 10",
             "Push ups, 3 x 20",
-			"Calfs, 3 x 50",
-			"Triceps",
-			"Biceps",
-			"Face pulls"
+            "Calfs, 3 x 50",
+            "Triceps",
+            "Biceps",
+            "Face pulls"
         ];
     }
 
