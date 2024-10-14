@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveListButton = document.getElementById("save-list");
     const defaultWorkoutLink = document.getElementById("default-workout");
     const workoutListsDiv = document.getElementById("workout-lists");
+    const errorMessage = document.getElementById("error-message");
 
     // Timer variables
     let timer;
@@ -123,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Allow adding a new item by pressing Enter
             newItem.querySelector("input[type='text']").addEventListener("keydown", function (event) {
                 if (event.key === "Enter") {
-                    addNewItem();
+                    addNewItemAndFocus();
                 }
             });
         });
@@ -150,18 +151,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handle creating a new workout list
     createNewListButton.addEventListener("click", function () {
         const listName = prompt("Enter the name of your new workout list:");
-        if (listName) {
-            const lists = loadWorkoutLists();
-            lists[listName] = []; // Create an empty list
-            saveWorkoutLists(lists);
-            activeWorkoutList = listName;
-            renderWorkoutList(['']); // Show one empty item initially
-            showWorkoutScreen();
+        const lists = loadWorkoutLists();
+        if (lists[listName]) {
+            errorMessage.style.display = "block"; // Show error if list name already exists
+        } else {
+            errorMessage.style.display = "none"; // Hide error message if no duplicate
+            if (listName) {
+                lists[listName] = []; // Create an empty list
+                saveWorkoutLists(lists);
+                activeWorkoutList = listName;
+                renderWorkoutList(['']); // Show one empty item initially
+                showWorkoutScreen();
+            }
         }
     });
 
-    // Add a new workout item
-    function addNewItem() {
+    // Add a new workout item and focus on it
+    function addNewItemAndFocus() {
         const newItem = document.createElement("div");
         newItem.innerHTML = `
             <input type="checkbox" class="workout-item"> 
@@ -170,22 +176,26 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         workoutList.appendChild(newItem);
 
+        // Focus on the new item's input field
+        const inputField = newItem.querySelector("input[type='text']");
+        inputField.focus();
+
         newItem.querySelector(".delete-item").addEventListener("click", function () {
             workoutList.removeChild(newItem);
             saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
         });
 
-        // Allow adding a new item by pressing Enter
-        newItem.querySelector("input[type='text']").addEventListener("keydown", function (event) {
+        // Add "Enter" key functionality to the new input field
+        inputField.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
-                addNewItem();
+                addNewItemAndFocus();
             }
         });
 
         saveWorkoutList(activeWorkoutList, getCurrentWorkoutItems());
     }
 
-    addItemButton.addEventListener("click", addNewItem);
+    addItemButton.addEventListener("click", addNewItemAndFocus);
 
     // Go back to the start screen (home button)
     goHomeButton.addEventListener("click", function () {
