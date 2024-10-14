@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const createNewListButton = document.getElementById("create-new-list");
     const goHomeButton = document.getElementById("go-home");
     const saveListButton = document.getElementById("save-list");
-    const defaultWorkoutLink = document.getElementById("default-workout");
     const workoutListsDiv = document.getElementById("workout-lists");
     const errorMessage = document.getElementById("error-message");
 
@@ -74,32 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const lists = loadWorkoutLists();
         workoutListsDiv.innerHTML = ''; // Clear existing items
 
-        // Ensure default list is shown only once
-        const defaultLink = document.createElement("a");
-        defaultLink.textContent = "Savage Viking Workout";
-        defaultLink.className = "workout-link";
-        defaultLink.href = "#";
-        defaultLink.addEventListener("click", function () {
-            activeWorkoutList = "Savage Viking Workout";
-            renderWorkoutList(loadWorkoutList(activeWorkoutList));
-            showWorkoutScreen();
-        });
-        workoutListsDiv.appendChild(defaultLink);
-
-        // Render other lists as clickable text below the default list
+        // Render the "Savage Viking Workout" list as clickable text
         for (let listName in lists) {
-            if (listName !== "Savage Viking Workout") {
-                const listLink = document.createElement("a");
-                listLink.textContent = listName;
-                listLink.className = "workout-link";
-                listLink.href = "#";
-                listLink.addEventListener("click", function () {
-                    activeWorkoutList = listName;
-                    renderWorkoutList(loadWorkoutList(listName));
-                    showWorkoutScreen();
-                });
-                workoutListsDiv.appendChild(listLink);
-            }
+            const listLink = document.createElement("a");
+            listLink.textContent = listName;
+            listLink.className = "workout-link";
+            listLink.href = "#";
+            listLink.addEventListener("click", function () {
+                activeWorkoutList = listName;
+                renderWorkoutList(loadWorkoutList(listName));
+                showWorkoutScreen();
+            });
+            workoutListsDiv.appendChild(listLink);
         }
     }
 
