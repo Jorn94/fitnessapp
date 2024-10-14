@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", function () {
             "Traps shrugs",
             "Leg raises, 3 x 10",
             "Push ups, 3 x 20",
-            "Calfs, 3 x 50",
-            "Triceps",
-            "Biceps",
-            "Face pulls"
+			"Calfs, 3 x 50",
+			"Triceps",
+			"Biceps",
+			"Face pulls"
         ];
     }
 
@@ -68,19 +68,21 @@ document.addEventListener("DOMContentLoaded", function () {
         renderWorkoutLists(); // Ensure the list appears on the home screen
     }
 
-    // Function to render all workout lists on the start screen
+    // Function to render all workout lists on the start screen as clickable text
     function renderWorkoutLists() {
         const lists = loadWorkoutLists();
         workoutListsDiv.innerHTML = ''; // Clear existing items
         for (let listName in lists) {
-            const listButton = document.createElement("button");
-            listButton.textContent = listName;
-            listButton.addEventListener("click", function () {
+            const listLink = document.createElement("a");
+            listLink.textContent = listName;
+            listLink.className = "workout-link";
+            listLink.href = "#";
+            listLink.addEventListener("click", function () {
                 activeWorkoutList = listName;
                 renderWorkoutList(loadWorkoutList(listName));
                 showWorkoutScreen();
             });
-            workoutListsDiv.appendChild(listButton);
+            workoutListsDiv.appendChild(listLink);
         }
     }
 
